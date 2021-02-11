@@ -32,19 +32,50 @@ suite("Functional Tests", function () {
       });
 
       test("Convert 32g (invalid input unit)", function (done) {
-        //done();
+        chai
+          .request(server)
+          .get("/api/convert")
+          .query({ input: "32g" })
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            assert.equal(res.text, "invalid unit");
+            done();
+          });
       });
 
       test("Convert 3/7.2/4kg (invalid number)", function (done) {
-        //done();
+        chai
+          .request(server)
+          .get("/api/convert")
+          .query({ input: "30/30/30km" })
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            assert.equal(res.text, "invalid number");
+            done();
+          });
       });
 
       test("Convert 3/7.2/4kilomegagram (invalid number and unit)", function (done) {
-        //done();
+        chai
+          .request(server)
+          .get("/api/convert")
+          .query({ input: "30/30/30killers" })
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            assert.equal(res.text, "invalid number and input");
+            done();
+          });
       });
 
       test("Convert kg (no number)", function (done) {
-        //done();
+        chai
+          .request(server)
+          .get("/api/convert")
+          .query({ input: "kg" })
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            done();
+          });
       });
     });
   });
