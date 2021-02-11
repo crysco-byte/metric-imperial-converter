@@ -46,7 +46,7 @@ module.exports = function (app) {
     res.json({
       initNum: initNum,
       initUnit: initUnit,
-      returnNum: returnNum,
+      returnNum: Number(returnNum.toFixed(5)),
       returnUnit: returnUnit,
       string: string,
     });
