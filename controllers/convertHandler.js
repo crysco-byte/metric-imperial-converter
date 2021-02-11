@@ -34,14 +34,28 @@ function ConvertHandler() {
 
   this.getUnit = function (input) {
     const regex = /\d(gal|l|lbs|kg|mi|km)$/i;
-    if (regex.test(input) === false) {
+    let noNumPrevention = "1" + input;
+    if (regex.test(noNumPrevention) === false) {
       throw TypeError("Unknown Unit Input");
     }
-    return input;
+    let res = noNumPrevention.split("");
+    res.shift();
+    return res.join("");
+  };
+  this.checkNIErr = (input) => {
+    const numReg = /([a-z]+)$/i;
+    const unitReg = /\d(gal|l|lbs|kg|mi|km)$/i;
+    let num = input.replace(numReg, "");
+    if (num === "") {
+      num = 1;
+    } else if (testDoubleFraction(num) > 1 && unitReg.test(input) === false) {
+      throw "invalid number and unit";
+    } else if (testDoubleFraction(num) === 1) {
+      return true;
+    }
   };
 
   this.getReturnUnit = function (initUnit) {
-    const lowerUni = initUnit.toLowerCase();
     const units = {
       gal: "l",
       l: "gal",
@@ -51,7 +65,7 @@ function ConvertHandler() {
       km: "mi",
     };
 
-    return units[lowerUni];
+    return units[initUnit];
   };
 
   this.spellOutUnit = function (unit) {
