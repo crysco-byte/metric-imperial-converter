@@ -45,9 +45,9 @@ module.exports = function (app) {
 
     res.json({
       initNum: initNum,
-      initUnit: initUnit,
+      initUnit: initUnit === "l" ? "L" : initUnit,
       returnNum: Number(returnNum.toFixed(5)),
-      returnUnit: returnUnit,
+      returnUnit: returnUnit === "l" ? "L" : returnUnit,
       string: string,
     });
   });
