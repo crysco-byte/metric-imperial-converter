@@ -38,6 +38,12 @@ suite("Unit Tests", function () {
       done();
     });
 
+    test("invalid number 2a3gal", (done) => {
+      assert.throws(() => convertHandler.getNum("2a3gal"));
+      assert.doesNotThrow(() => convertHandler.getNum("23gal"));
+      done();
+    });
+
     test("Invalid Input (double fraction)", function (done) {
       assert.throws(
         () => convertHandler.getNum("20/2/2"),

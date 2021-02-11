@@ -21,10 +21,15 @@ const testDoubleFraction = (s) => {
 function ConvertHandler() {
   this.getNum = function (input) {
     const numReg = /([a-z]+)$/i;
+    const slashReg = /\//g;
     let num = input.replace(numReg, "");
+    let numNoFraction = num.replace(slashReg, "");
     if (num === "") {
       num = 1;
-    } else if (testDoubleFraction(num) > 1) {
+    } else if (
+      (testDoubleFraction(num) > 1) |
+      (!!Number(numNoFraction) === false)
+    ) {
       throw "Invalid Input (double fraction)";
     } else if (testDoubleFraction(num) === 1) {
       return eval(num);
