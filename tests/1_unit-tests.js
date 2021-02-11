@@ -69,7 +69,7 @@ suite("Unit Tests", function () {
         "KG",
       ];
       input.forEach(function (ele) {
-        const regex = /\d(gal|l|lbs|kg|mi|km)$/i;
+        const regex = /(gal|l|lbs|kg|mi|km)$/i;
         if (regex.test(ele) === false) {
           assert.throws(
             () => convertHandler.getUnit(ele),
@@ -147,15 +147,29 @@ suite("Unit Tests", function () {
       done();
     });
     test("get string", (done) => {
-      let input = "1l";
+      let input = "30l";
       const num = convertHandler.getNum(input),
         unit = convertHandler.spellOutUnit(input);
       const returnNum = convertHandler.convert(num, unit),
         returnUnit = convertHandler.getReturnUnit(unit);
       assert.equal(
         convertHandler.getString(num, unit, returnNum, returnUnit),
-        "1 liters converts to 0.26417 gallons"
+        "30 liters converts to 7.92517 gallons"
       );
+      done();
+    });
+    test("check number and input error (throws)", (done) => {
+      let input = "30/30/30galkkk";
+      assert.throws(() => convertHandler.checkNIErr(input));
+      done();
+    });
+    test("check number and input error (does not throw)", (done) => {
+      let input = "30l";
+      assert.doesNotThrow(() => convertHandler.checkNIErr(input));
+      done();
+    });
+    test("no number valid unit", (done) => {
+      assert.doesNotThrow(() => convertHandler.getUnit("km"));
       done();
     });
   });
