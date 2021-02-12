@@ -49,14 +49,28 @@ function ConvertHandler() {
   };
   this.checkNIErr = (input) => {
     const numReg = /([a-z]+)$/i;
+    const slashReg = /\//g;
     const unitReg = /\d(gal|l|lbs|kg|mi|km)$/i;
     let num = input.replace(numReg, "");
-    if (num === "") {
-      num = 1;
-    } else if (testDoubleFraction(num) > 1 && unitReg.test(input) === false) {
-      throw "invalid number and unit";
-    } else if (testDoubleFraction(num) === 1) {
-      return true;
+    let numNoFraction = num.replace(slashReg, "");
+    let unitTest = "1" + input;
+    num === "" ? (num = "1") : null;
+
+    let orCondition =
+      (testDoubleFraction(num) > 1) | (!!Number(numNoFraction) === false)
+        ? true
+        : false;
+
+    console.log(`orCondition: ${orCondition} \n
+    unitTest: ${unitReg.test(unitTest)} \n
+    throw condition: ${orCondition && unitReg.test(unitTest) === false} \n
+    input: ${input} \n
+    num: ${num}\n
+    unitTest variable: ${unitTest}\n
+    no fraction number: ${numNoFraction}
+    `);
+    if (orCondition && unitReg.test(unitTest) === false) {
+      throw "invalid number and input";
     }
   };
 

@@ -170,7 +170,7 @@ suite("Unit Tests", function () {
       done();
     });
     test("check number and input error (does not throw)", (done) => {
-      let input = "30l";
+      let input = "30/7.4/4l";
       assert.doesNotThrow(() => convertHandler.checkNIErr(input));
       done();
     });

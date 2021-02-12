@@ -47,7 +47,7 @@ suite("Functional Tests", function () {
         chai
           .request(server)
           .get("/api/convert")
-          .query({ input: "30/30/30km" })
+          .query({ input: "3/6.2/4kg" })
           .end((err, res) => {
             assert.equal(res.status, 200);
             assert.equal(res.text, "invalid number");
