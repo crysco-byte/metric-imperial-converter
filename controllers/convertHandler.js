@@ -52,7 +52,7 @@ function ConvertHandler() {
     const slashReg = /\//g;
     const unitReg = /\d(gal|l|lbs|kg|mi|km)$/i;
     let num = input.replace(numReg, "");
-    let numNoFraction = num.replace(slashReg, "");
+    let numNoFraction = "1" + num.replace(slashReg, "");
     let unitTest = "1" + input;
     num === "" ? (num = "1") : null;
 
@@ -61,14 +61,6 @@ function ConvertHandler() {
         ? true
         : false;
 
-    console.log(`orCondition: ${orCondition} \n
-    unitTest: ${unitReg.test(unitTest)} \n
-    throw condition: ${orCondition && unitReg.test(unitTest) === false} \n
-    input: ${input} \n
-    num: ${num}\n
-    unitTest variable: ${unitTest}\n
-    no fraction number: ${numNoFraction}
-    `);
     if (orCondition && unitReg.test(unitTest) === false) {
       throw "invalid number and input";
     }
